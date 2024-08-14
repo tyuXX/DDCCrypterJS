@@ -8,6 +8,7 @@ const customEncryptionMenu = document.getElementById("customEncryptionMenu");
 const openMenuBtn = document.getElementById("openMenuBtn");
 const closeMenuBtn = document.getElementById("closeMenuBtn");
 const addStepBtn = document.getElementById("addStepBtn");
+const clearStepsBtn = document.getElementById("clearStepsBtn");
 const stepsContainer = document.getElementById("stepsContainer");
 
 // Function to open the custom encryption menu
@@ -19,6 +20,10 @@ openMenuBtn.addEventListener("click", () => {
 closeMenuBtn.addEventListener("click", () => {
   customEncryptionMenu.style.display = "none";
 });
+
+clearStepsBtn.addEventListener("click", () => {
+  stepsContainer.innerHTML = "";
+})
 
 // Function to add a new step to the custom encryption menu
 addStepBtn.addEventListener("click", () => {
