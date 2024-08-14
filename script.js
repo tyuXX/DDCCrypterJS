@@ -113,6 +113,9 @@ document.getElementById("encryptBtn").addEventListener("click", async () => {
       output.value = await engine.encrypt(plaintext.value, keyInput.value);
     }
   }
+  if(singleTextboxCheckbox.checked){
+    plaintext.value=output.value;
+}
 });
 
 // Modify the decryption button to use custom decryption
@@ -139,6 +142,9 @@ document.getElementById("decryptBtn").addEventListener("click", async () => {
     if (engine) {
       output.value = await engine.decrypt(plaintext.value, keyInput.value);
     }
+  }
+  if(singleTextboxCheckbox.checked){
+      plaintext.value=output.value;
   }
 });
 
