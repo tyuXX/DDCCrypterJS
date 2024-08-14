@@ -70,6 +70,22 @@ async function applyCustomEncryption(text, key, steps) {
   return result;
 }
 
+async function applyCustomDecryption(text, key, steps) {
+  let result = text;
+
+  for (const step of steps) {
+    const engine = getEngine(step.algorithm);
+    if (engine) {
+      const stepKey = step.customKey || key;
+      for (let i = 0; i < step.times; i++) {
+        result = await engine.decrypt(result, stepKey);
+      }
+    }
+  }
+
+  return result;
+}
+
 // Function to generate a random key based on the selected encryption engine
 document
   .getElementById("generateKeyBtn")
@@ -113,9 +129,9 @@ document.getElementById("encryptBtn").addEventListener("click", async () => {
       output.value = await engine.encrypt(plaintext.value, keyInput.value);
     }
   }
-  if(singleTextboxCheckbox.checked){
-    plaintext.value=output.value;
-}
+  if (singleTextboxCheckbox.checked) {
+    plaintext.value = output.value;
+  }
 });
 
 // Modify the decryption button to use custom decryption
@@ -131,7 +147,7 @@ document.getElementById("decryptBtn").addEventListener("click", async () => {
         return { algorithm, times, customKey };
       });
 
-    const decryptedText = await applyCustomEncryption(
+    const decryptedText = await applyCustomDecryption(
       plaintext.value,
       keyInput.value,
       steps
@@ -143,8 +159,8 @@ document.getElementById("decryptBtn").addEventListener("click", async () => {
       output.value = await engine.decrypt(plaintext.value, keyInput.value);
     }
   }
-  if(singleTextboxCheckbox.checked){
-      plaintext.value=output.value;
+  if (singleTextboxCheckbox.checked) {
+    plaintext.value = output.value;
   }
 });
 
