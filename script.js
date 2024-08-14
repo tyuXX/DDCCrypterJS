@@ -10,6 +10,9 @@ const closeMenuBtn = document.getElementById("closeMenuBtn");
 const addStepBtn = document.getElementById("addStepBtn");
 const clearStepsBtn = document.getElementById("clearStepsBtn");
 const stepsContainer = document.getElementById("stepsContainer");
+const openAddonsBtn = document.getElementById("openAddonsBtn");
+const addonsMenu = document.getElementById("addonsMenu");
+const closeAddonsBtn = document.getElementById("closeAddonsBtn");
 
 // Function to open the custom encryption menu
 openMenuBtn.addEventListener("click", () => {
@@ -177,3 +180,13 @@ singleTextboxCheckbox.addEventListener("change", () => {
     output.style.display = "block";
   }
 });
+
+// Function to open the addons menu
+openAddonsBtn.addEventListener("click", () => {
+    addonsMenu.style.display = "block";
+  });
+  
+  // Function to close the addons menu
+  closeAddonsBtn.addEventListener("click", () => {
+    addonsMenu.style.display = "none";
+  });
