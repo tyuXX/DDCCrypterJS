@@ -1,6 +1,17 @@
 //#region Registry
 var registeredengines = [
   {
+    id:"custom",
+    name: "Custom",
+    source: "Built-In",
+    encrypt: null,
+    decrypt: null,
+    keygen: {
+      func: (length) => generateRandomKey(length),
+      length: 0,
+    },
+  },
+  {
     id: "caesar",
     name: "Caesar Cipher",
     source: "Built-In",
@@ -89,7 +100,7 @@ var registeredengines = [
     },
   },
   {
-    id:"rot47",
+    id: "rot47",
     name: "ROT47",
     source: "Built-In",
     encrypt: (text) => rot47(text),
@@ -122,7 +133,8 @@ function loadengines() {
   for (let i = 0; i < registeredengines.length; i++) {
     let option = document.createElement("option");
     option.value = registeredengines[i].id;
-    option.text = registeredengines[i].name + " - " + registeredengines[i].source;
+    option.text =
+      registeredengines[i].name + " - " + registeredengines[i].source;
     selector.appendChild(option);
   }
 }
@@ -401,33 +413,39 @@ function base64Decrypt(encodedText) {
 
 //#region Rot
 function rot13(text) {
-    return text.split("").map(char => {
-        // Check if the character is a letter
-        if (char >= 'a' && char <= 'z') {
-            // Shift within the lowercase letters
-            return String.fromCharCode(((char.charCodeAt(0) - 97 + 13) % 26) + 97);
-        } else if (char >= 'A' && char <= 'Z') {
-            // Shift within the uppercase letters
-            return String.fromCharCode(((char.charCodeAt(0) - 65 + 13) % 26) + 65);
-        } else {
-            // Non-alphabet characters remain unchanged
-            return char;
-        }
-    }).join("");
+  return text
+    .split("")
+    .map((char) => {
+      // Check if the character is a letter
+      if (char >= "a" && char <= "z") {
+        // Shift within the lowercase letters
+        return String.fromCharCode(((char.charCodeAt(0) - 97 + 13) % 26) + 97);
+      } else if (char >= "A" && char <= "Z") {
+        // Shift within the uppercase letters
+        return String.fromCharCode(((char.charCodeAt(0) - 65 + 13) % 26) + 65);
+      } else {
+        // Non-alphabet characters remain unchanged
+        return char;
+      }
+    })
+    .join("");
 }
 function rot47(text) {
-    return text.split("").map(char => {
-        const charCode = char.charCodeAt(0);
+  return text
+    .split("")
+    .map((char) => {
+      const charCode = char.charCodeAt(0);
 
-        // ROT47 operates on the range of ASCII characters from 33 (!) to 126 (~)
-        if (charCode >= 33 && charCode <= 126) {
-            // Shift the character by 47 positions within the range
-            return String.fromCharCode(((charCode - 33 + 47) % 94) + 33);
-        } else {
-            // Non-ASCII characters remain unchanged
-            return char;
-        }
-    }).join("");
+      // ROT47 operates on the range of ASCII characters from 33 (!) to 126 (~)
+      if (charCode >= 33 && charCode <= 126) {
+        // Shift the character by 47 positions within the range
+        return String.fromCharCode(((charCode - 33 + 47) % 94) + 33);
+      } else {
+        // Non-ASCII characters remain unchanged
+        return char;
+      }
+    })
+    .join("");
 }
 
 //#endregion

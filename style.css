@@ -102,3 +102,42 @@ button + button {
     margin-left: 0;
   }
 }
+
+.custom-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.custom-menu h2 {
+  margin-top: 0;
+}
+
+.custom-menu button {
+  margin-right: 10px;
+}
+
+#stepsContainer {
+  margin-top: 20px;
+}
+
+.step {
+  margin-bottom: 20px;
+}
+
+.step select,
+.step input[type="text"] {
+  margin-right: 10px;
+}
+
+#hidden {
+  display: none;
+}
