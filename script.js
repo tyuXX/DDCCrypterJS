@@ -1,46 +1,40 @@
+//Cache
+const plaintext = document.getElementById("plaintext");
+const keyInput = document.getElementById("key");
+const selectedEngine = document.getElementById("encryptionType");
+const output = document.getElementById("output");
+
 // Function to generate a random key based on the selected encryption engine
-document.getElementById('generateKeyBtn').addEventListener('click', async () => {
-    const keyInput = document.getElementById('key');
-    const selectedEngine = document.getElementById('encryptionType').value;
-    const engine = registeredengines.find(engine => engine.id === selectedEngine);
-    
+document
+  .getElementById("generateKeyBtn")
+  .addEventListener("click", async () => {
+    const engine = getEngine(selectedEngine.value);
     if (engine) {
-        let keyLength;
-        if (keyInput.value) {
-            // Use the provided text as a seed
-            keyLength = engine.id === 'aes' ? 16 : 8;
-            const key = await seedToKey(keyInput.value, keyLength);
-            keyInput.value = key;
-        } else {
-            // Generate a completely random key
-            keyLength = engine.id === 'aes' ? 16 : 8;
-            keyInput.value = engine.keygen(keyLength);
-        }
+      const keyLength = engine.keygen.length;
+      let key;
+      if (keyInput.value) {
+        // Use the provided text as a seed
+        key = await seedToKey(keyInput.value, keyLength);
+      } else {
+        // Generate a completely random key
+        key = engine.keygen.func(keyLength);
+      }
+      keyInput.value = key;
     }
-});
+  });
 
 // Function to handle encryption
-document.getElementById('encryptBtn').addEventListener('click', async () => {
-    const plaintext = document.getElementById('plaintext').value;
-    const key = document.getElementById('key').value;
-    const selectedEngine = document.getElementById('encryptionType').value;
-    const engine = registeredengines.find(engine => engine.id === selectedEngine);
-
-    if (engine) {
-        const ciphertext = await engine.encrypt(plaintext, key);
-        document.getElementById('output').value = ciphertext;
-    }
+document.getElementById("encryptBtn").addEventListener("click", async () => {
+  const engine = getEngine(selectedEngine.value);
+  if (engine) {
+    output.value = await engine.encrypt(plaintext.value, key.value);
+  }
 });
 
 // Function to handle decryption
-document.getElementById('decryptBtn').addEventListener('click', async () => {
-    const ciphertext = document.getElementById('plaintext').value;
-    const key = document.getElementById('key').value;
-    const selectedEngine = document.getElementById('encryptionType').value;
-    const engine = registeredengines.find(engine => engine.id === selectedEngine);
-
-    if (engine) {
-        const plaintext = await engine.decrypt(ciphertext, key);
-        document.getElementById('output').value = plaintext;
-    }
+document.getElementById("decryptBtn").addEventListener("click", async () => {
+  const engine = getEngine(selectedEngine.value);
+  if (engine) {
+    output.value = await engine.decrypt(plaintext.value, keyInput.value);
+  }
 });
